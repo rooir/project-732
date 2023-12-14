@@ -1,0 +1,24 @@
+<title>rooir!</title>
+<style>*{color:#eee;background:#111;white-space:pre-wrap;font-family:monospace;-ms-overflow-style:none;scrollbar-width:none;scroll-behavior:smooth;border:none;outline:none}*::selection{color:#111;background:#eee}@media(prefers-color-scheme:light){*{color:#111;background:#eee}}</style>
+<script>document.addEventListener('DOMContentLoaded',()=>{
+// save function
+	function save(localsave){localStorage.setItem(localsave,document.getElementById(localsave).value)};
+	
+// search function
+	function search(searchval){};
+
+// search input
+	document.body.appendChild(Object.assign(document.createElement('input'),{id:'search',oninput:()=>search('search'),placeholder:'search...',type:'search',style:'width:320px',autofocus:true}));
+
+// username input
+	document.body.appendChild(Object.assign(document.createElement('input'),{id:'username',oninput:()=>save('username'),placeholder:'username...',type:'text',autocomplete:true,style:'width:160px'}));
+	
+// authkey input
+	document.body.appendChild(Object.assign(document.createElement('input'),{id:'authkey',oninput:()=>save('authkey'),placeholder:'authkey...',type:'password',autocomplete:true,style:'width:160px'}));
+
+// load function
+	window.onload=function(){
+		document.getElementById('username').value=localStorage.getItem('username');
+		document.getElementById('authkey').value=localStorage.getItem('authkey');
+	};
+});</script>
