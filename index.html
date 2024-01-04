@@ -1,24 +1,25 @@
-<title>rooir!</title>
-<style>*{color:#eee;background:#111;white-space:pre-wrap;font-family:monospace;-ms-overflow-style:none;scrollbar-width:none;scroll-behavior:smooth;border:none;outline:none}*::selection{color:#111;background:#eee}@media(prefers-color-scheme:light){*{color:#111;background:#eee}}</style>
-<script>document.addEventListener('DOMContentLoaded',()=>{
-// save function
-	function save(localsave){localStorage.setItem(localsave,document.getElementById(localsave).value)};
-	
+<title>project732</title>
+<meta name='color-scheme' content='dark light'>
+<div style='display:flex;justify-content:space-between'>
+<input id='searchbar' placeholder='search...' type='search' style='width:60%' autofocus
+	onkeydown='(event)=>{}' />
+<input id='username' placeholder='username...' type='text' style='width:20%'
+	onload='document.getElementById("username").value=localStorage.getItem("username")' oninput='localStorage.setItem("username", this.value)' />
+<input id='authkey' placeholder='auth key...' type='password' style='width:20%'
+	onload='document.getElementById("authkey").value=localStorage.getItem("authkey")' oninput='localStorage.setItem("authkey", this.value)' />
+</div>
+<script>
 // search function
-	function search(searchval){};
-
-// search input
-	document.body.appendChild(Object.assign(document.createElement('input'),{id:'search',oninput:()=>search('search'),placeholder:'search...',type:'search',style:'width:320px',autofocus:true}));
-
-// username input
-	document.body.appendChild(Object.assign(document.createElement('input'),{id:'username',oninput:()=>save('username'),placeholder:'username...',type:'text',autocomplete:true,style:'width:160px'}));
-	
-// authkey input
-	document.body.appendChild(Object.assign(document.createElement('input'),{id:'authkey',oninput:()=>save('authkey'),placeholder:'authkey...',type:'password',autocomplete:true,style:'width:160px'}));
-
-// load function
-	window.onload=function(){
-		document.getElementById('username').value=localStorage.getItem('username');
-		document.getElementById('authkey').value=localStorage.getItem('authkey');
-	};
-});</script>
+function search(searchinput){
+	fetch("https://e621.net/posts.json?tags=${searchinput}")
+		.then(response=>response.json())
+		.then(data=>{if(Array.isArray(data.posts)){
+			for(var item of data.posts){
+				document.body.innerHTML+='<div><a href="${item.file.url}"><img src="${encodeURIComponent(item.preview.url)}"></a></div>';
+			}
+		};console.log(data)})
+};
+</script>
+<style>
+*{margin:0;padding:0;white-space:pre-wrap;font-family:monospace;-ms-overflow-style:none;scrollbar-width:none;scroll-behavior:smooth;border:none;outline:none;background:none}
+::-webkit-scrollbar{display:none}
